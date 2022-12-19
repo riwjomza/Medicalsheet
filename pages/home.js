@@ -17,6 +17,11 @@ export default function Home() {
   const [name, setName] = useState('');
   const [age, setAge] = useState(null);
   const [weight, setWeight] = useState(null);
+  const [hn, setHN] = useState(null);
+  const [an, setAN] = useState(null);
+  const [bed, setBed] = useState(null);
+  const [drug, setDrug] = useState(null);
+  const [diagn, setDiagn] = useState(null);
   const [fireData, setFireData] = useState([]);
   const [isUpdate, setIsUpdate] = useState(false);
 //   const databaseRef = collection(database,'medicalsheet1');
@@ -35,7 +40,12 @@ export default function Home() {
     addDoc(collection(database,'medicalsheet1'), {
       name: name,
       age: Number(age),
-	  weight: Number(weight)
+	    weight: Number(weight),
+      hn: Number(hn),
+      an: Number(an),
+      bed:Number(bed),
+      drug : drug ,
+      diagn : diagn
 
     })
       .then(() => {
@@ -43,7 +53,13 @@ export default function Home() {
         getData()
         setName('')
         setAge(null)
-		setWeight(null)
+		    setWeight(null)
+        setHN(null)
+        setAN(null)
+        setBed(null)
+        setDrug(null)
+        setDiagn(null)
+
       })
       .catch((err) => {
         console.error(err);
@@ -59,11 +75,16 @@ export default function Home() {
       })
   }
 
-  const getID = (id, name, age, weight) => {
+  const getID = (id, name, age, weight,hn,an,bed,drug,diagn) => {
     setID(id)
     setName(name)
     setAge(age)
-	setWeight(weight)
+	  setWeight(weight)
+    setHN(hn)
+    setAN(an)
+    setBed(bed)
+    setDrug(drug)
+    setDiagn(diagn)
     setIsUpdate(true)
   }
 
@@ -72,7 +93,12 @@ export default function Home() {
     updateDoc(fieldToEdit, {
       name: name,
       age: Number(age),
-	  weight: Number(weight) 
+	    weight: Number(weight) ,
+      hn: Number(hn),
+      an: Number(an),
+      bed : Number(bed),
+      drug : drug,
+      diagn : diagn
 
     })
     .then(() => {
@@ -140,6 +166,43 @@ export default function Home() {
           onChange={event => setWeight(event.target.value)}
         />
 
+    <input
+          placeholder='HN'
+          className={styles.inputBox}
+          type="text"
+          value={hn}
+          onChange={event => setHN(event.target.value)}
+        />
+     <input
+          placeholder='AN'
+          className={styles.inputBox}
+          type="text"
+          value={an}
+          onChange={event => setAN(event.target.value)}
+        />
+     <input
+          placeholder='Bed Number'
+          className={styles.inputBox}
+          type="text"
+          value={bed}
+          onChange={event => setBed(event.target.value)}
+        />
+      <input
+          placeholder='ประวัติการแพ้ยา'
+          className={styles.inputBox}
+          type="text"
+          value={drug}
+          onChange={event => setDrug(event.target.value)}
+        />
+
+     <input
+          placeholder='การวินิจฉัย'
+          className={styles.inputBox}
+          type="text"
+          value={diagn}
+          onChange={event => setDiagn(event.target.value)}
+        />
+
         {isUpdate ? (
           <button
             className={styles.button}
@@ -161,11 +224,13 @@ export default function Home() {
             return (
               <div className={styles.flex}>
                 <h3>Name: {data.name}</h3>
-                <p>Age: {data.age}</p>
-				<p>Weight: {data.weight}</p>
+                <p>HN: {data.hn}</p>
+                <p>AN: {data.an}</p>
+                <p>Bed: {data.bed}</p>
+
                 <button
                   className={styles.button}
-                  onClick={() => getID(data.id, data.name, data.age, data.weight)}
+                  onClick={() => getID(data.id, data.name, data.age, data.weight, data.hn, data.an, data.bed ,data.drug, data.diagn)}
                 >Update</button>
                 <button
                   className={styles.button}
